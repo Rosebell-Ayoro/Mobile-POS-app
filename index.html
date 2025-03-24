@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Next-gen NinjaTrader 8 strategy development, AI-powered consultations, and advanced indicator optimization services by TanaTrading Labs">
+    <meta name="theme-color" content="#2563EB">
+    
+    <title>TanaTrading Labs | Advanced NinjaTrader Solutions</title>
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/css/styles.css" as="style">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            950: '#082f49'
+                        }
+                    },
+                    animation: {
+                        'gradient-x': 'gradient-x 15s ease infinite',
+                        'gradient-y': 'gradient-y 15s ease infinite',
+                        'gradient-xy': 'gradient-xy 15s ease infinite',
+                        float: 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        'gradient-y': {
+                            '0%, 100%': {
+                                'background-size': '400% 400%',
+                                'background-position': 'center top'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'center center'
+                            }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            },
+            plugins: []
+        }
+    </script>
+
+    <style>
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            }
+            .text-gradient {
+                background: linear-gradient(to right, #2563eb, #3b82f6);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .bg-glass {
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900 min-h-screen">
+    <!-- Top Banner -->
+    <div class="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1 dark:bg-gray-900">
+        <div class="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl">
+            <div class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-primary-500 to-primary-700 opacity-30" 
+                 style="clip-path: polygon(74.8% 41.9%, 97.2% 73.2%, 100% 34.9%, 92.5% 0.4%, 87.5% 0%, 75% 28.6%, 58.5% 54.6%, 50.1% 56.8%, 46.9% 44%, 48.3% 17.4%, 24.7% 53.9%, 0% 27.9%, 11.9% 74.2%, 24.9% 54.1%, 68.6% 100%, 74.8% 41.9%)">
+            </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <p class="text-sm leading-6 text-gray-900 dark:text-gray-100">
+                <strong class="font-semibold">Authorized NinjaTrader® Vendor</strong>
+                <svg viewBox="0 0 2 2" class="mx-2 inline h-0.5 w-0.5 fill-current"><circle cx="1" cy="1" r="1" /></svg>
+                Professional Trading Solutions
+            </p>
+            <a href="#contact" 
+               class="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-all duration-300 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100">
+                Get Started <span aria-hidden="true">&rarr;</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="fixed w-full top-0 z-50 transition-all duration-500">
+        <nav class="mx-auto bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200/80 dark:border-gray-700/80">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex h-16 items-center justify-between">
+                    <!-- Logo Area -->
+                    <div class="flex-shrink-0">
+                        <a href="/" class="flex items-center">
+                            <img class="h-8 w-auto" src="/logo.svg" alt="TanaTrading Labs">
+                            <span class="ml-2 text-xl font-bold text-gray-900 dark:text-white">TanaTrading Labs</span>
+                        </a>
+                    </div>
+
+                    <!-- Desktop Navigation -->
+                    <div class="hidden md:flex md:items-center md:space-x-8">
+                        <a href="#services" 
+                           class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 transition-colors duration-300">
+                            Services
+                        </a>
+                        <a href="#features" 
+                           class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 transition-colors duration-300">
+                            Features
+                        </a>
+                        <a href="#pricing" 
+                           class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 transition-colors duration-300">
+                            Pricing
+                        </a>
+                        <a href="#contact" 
+                           class="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-full text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300 shadow-md hover:shadow-lg">
+                            Get Started
+                        </a>
+
+                        <!-- Dark Mode Toggle -->
+                        <button id="theme-toggle" 
+                                class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-lg transition-colors duration-300">
+                            <!-- Sun icon -->
+                            <svg class="hidden dark:block w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
+                            </svg>
+                            <!-- Moon icon -->
+                            <svg class="block dark:hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Mobile menu button -->
+                    <div class="flex md:hidden">
+                        <button type="button" 
+                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 transition-all duration-300"
+                                aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="relative pt-16">
+        <!-- Hero Background Elements -->
+        <div class="absolute inset-0 grid grid-cols-2 -z-10 dark:opacity-20">
+            <div class="bg-gradient-to-br from-primary-50 to-primary-100 blur-3xl dark:from-primary-900 dark:to-primary-800"></div>
+            <div class="bg-gradient-to-r from-primary-50 to-white blur-3xl dark:from-primary-900 dark:to-gray-900"></div>
+        </div>
+
+        <div class="relative isolate px-6 pt-14 lg:px-8">
+            <div class="mx-auto max-w-7xl py-32 sm:py-48 lg:py-56">
+                <div class="text-center">
+                    <!-- Hero Badge -->
+                    <div class="mb-8 flex justify-center">
+                        <div class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 dark:text-gray-300 dark:ring-gray-700 dark:hover:ring-gray-600">
+                            Announcing our next-gen trading solutions.
+                            <a href="#services" class="font-semibold text-primary-600 dark:text-primary-400">
+                                <span class="absolute inset-0" aria-hidden="true"></span>
+                                Read more <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Hero Title -->
+                    <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-white text-shadow">
+                        Next-Generation
+                        <span class="text-primary-600 dark:text-primary-400">Trading Solutions</span>
+                    </h1>
+
+                    <!-- Hero Description -->
+                    <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                        Elevate your trading with AI-powered strategy development, expert consultations, 
+                        and advanced indicator optimization services.
+                    </p>
+
+                    <!-- Hero Actions -->
+                    <div class="mt-10 flex items-center justify-center gap-x-6">
+                        <a href="#services" 
+                           class="rounded-full bg-primary-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-all duration-300 group flex items-center">
+                            Explore Services
+                            <span class="ml-2 inline-block transition-transform group-hover:translate-x-1">&rarr;</span>
+                        </a>
+                        <a href="#contact" 
+                           class="rounded-full border border-gray-300 dark:border-gray-700 px-6 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300">
+                            Schedule Consultation
+                        </a>
+                    </div>
+
+                    <!-- Stats Section -->
+                    <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                        <!-- Stat 1 -->
+                        <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50 dark:border-gray-700/50 hover:transform hover:scale-105 transition-all duration-300">
+                            <div class="text-primary-600 dark:text-primary-400 mb-2">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">500+</h3>
+                            <p class="text-gray-600 dark:text-gray-300">Active Traders</p>
+                        </div>
+
+                        <!-- Stat 2 -->
+                        <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50 dark:border-gray-700/50 hover:transform hover:scale-105 transition-all duration-300">
+                            <div class="text-primary-600 dark:text-primary-400 mb-2">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">99.9%</h3>
+                            <p class="text-gray-600 dark:text-gray-300">Uptime Guaranteed</p>
+                        </div>
+
+                        <!-- Stat 3 -->
+                        <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50 dark:border-gray-700/50 hover:transform hover:scale-105 transition-all duration-300">
+                            <div class="text-primary-600 dark:text-primary-400 mb-2">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">24/7</h3>
+                            <p class="text-gray-600 dark:text-gray-300">Support Available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-gray-50 dark:bg-gray-900/50 relative overflow-hidden">
+        <!-- Background Decorations -->
+        <div class="absolute inset-0 -z-10">
+            <div class="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white dark:bg-gray-800/10 shadow-xl shadow-primary-600/10 ring-1 ring-primary-50 dark:ring-primary-900/10"></div>
+        </div>
+
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="mx-auto max-w-2xl text-center mb-16">
+                <h2 class="text-base font-semibold leading-7 text-primary-600 dark:text-primary-400">Advanced Features</h2>
+                <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+                    Everything you need for professional trading
+                </p>
+                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+                    Leverage cutting-edge features designed for modern traders, powered by advanced AI and machine learning algorithms.
+                </p>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+                <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+                    <!-- Feature 1: AI Analysis -->
+                    <div class="group hover:transform hover:scale-105 transition-all duration-300">
+                        <div class="bg-white/50 dark:bg-gray-800/50 rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50 h-full">
+                            <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">
+                                <div class="rounded-lg bg-primary-600/10 p-2 ring-1 ring-primary-600/30 group-hover:bg-primary-600/20 transition-colors duration-300">
+                                    <svg class="h-5 w-5 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/>
+                                    </svg>
+                                </div>
+                                AI-Powered Analysis
+                            </dt>
+                            <dd class="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+                                Advanced machine learning algorithms for predictive analysis and pattern recognition in your trading strategies.
+                            </dd>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2: Real-time Optimization -->
+                    <div class="group hover:transform hover:scale-105 transition-all duration-300">
+                        <div class="bg-white/50 dark:bg-gray-800/50 rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50 h-full">
+                            <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">
+                                <div class="rounded-lg bg-primary-600/10 p-2 ring-1 ring-primary-600/30 group-hover:bg-primary-600/20 transition-colors duration-300">
+                                    <svg class="h-5 w-5 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/>
+                                    </svg>
+                                </div>
+                                Real-time Optimization
+                            </dt>
+                            <dd class="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+                                Dynamic strategy adjustment based on market conditions with millisecond precision execution.
+                            </dd>
+                        </div>
+                    </div>
+
+                    <!-- Feature 3: Advanced Backtesting -->
+                    <div class="group hover:transform hover:scale-105 transition-all duration-300">
+                        <div class="bg-white/50 dark:bg-gray-800/50 rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50 h-full">
+                            <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">
+                                <div class="rounded-lg bg-primary-600/10 p-2 ring-1 ring-primary-600/30 group-hover:bg-primary-600/20 transition-colors duration-300">
+                                    <svg class="h-5 w-5 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"/>
+                                    </svg>
+                                </div>
+                                Advanced Backtesting
+                            </dt>
+                            <dd class="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+                                Comprehensive historical testing with detailed performance metrics and risk analysis.
+                            </dd>
+                        </div>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="relative py-24 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0">
+            <div class="absolute inset-y-0 left-1/2 -z-10 w-[200%] -translate-x-1/2 bg-white/95 dark:bg-gray-900/95 ring-1 ring-primary-50 dark:ring-primary-900/10"></div>
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)] dark:bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)]"></div>
+        </div>
+
+        <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="mx-auto max-w-2xl text-center mb-16">
+                <h2 class="text-base font-semibold leading-7 text-primary-600 dark:text-primary-400">Our Services</h2>
+                <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+                    Professional Trading Solutions
+                </p>
+                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+                    Choose from our comprehensive range of trading services designed to help you succeed in the markets.
+                </p>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Service Card 1: Custom Strategies -->
+                <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+                    <!-- Card Header -->
+                    <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-primary-500 to-primary-700">
+                        <div class="flex items-center justify-center p-8">
+                            <svg class="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Card Content -->
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                            Custom Trading Strategies
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            Tailored NinjaTrader strategies designed specifically for your trading style and goals.
+                        </p>
+                        
+                        <!-- Feature List -->
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                <svg class="w-5 h-5 text-primary-600 dark:text-primary-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Personalized Strategy Development
+                            </li>
+                            <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                <svg class="w-5 h-5 text-primary-600 dark:text-primary-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Advanced Backtesting
+                            </li>
+                            <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                <svg class="w-5 h-5 text-primary-600 dark:text-primary-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Performance Optimization
+                            </li>
+                        </ul>
+
+                        <!-- Action Button -->
+                        <a href="#contact" class="inline-flex items-center justify-center w-full px-6 py-3 text-sm font-semibold text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-300">
+                            Get Started
+                            <svg class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service Card 2: Trading Consultations -->
+                <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+                    <!-- Card Header -->
+                    <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-primary-500 to-primary-700">
+                        <div class="flex items-center justify-center p-8">
+                            <svg class="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-6 0 4 4 0 016 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Card Content -->
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                            Expert Consultations
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            One-on-one sessions with experienced traders to improve your strategy and performance.
+                        </p>
+                        
+                        <!-- Feature List -->
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                <svg class="w-5 h-5 text-primary-600 dark:text-primary-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Strategy Review & Analysis
+                            </li>
+                            <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                <svg class="w-5 h-5 text-primary-600 dark:text-primary-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Performance Improvement
+                            </li>
+                            <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                <svg class="w-5 h-5 text-primary-600 dark:text-primary-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Risk Management Guidance
+                            </li>
+                        </ul>
+
+                        <!-- Action Button -->
+                        <a href="#contact" class="inline-flex items-center justify-center w-full px-6 py-3 text-sm font-semibold text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-300">
+                            Book Consultation
+                            <svg class="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service Card 3: Indicator Optimization -->
+                <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+                    <!-- Card Header -->
+                    <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-primary-500 to-primary-700">
+                        <div class="flex items-center justify-center p-8">
+                            <svg class="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Card Content -->
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                            Indicator Optimization
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">
+                            Fine-tune your trading indicators for maximum effectiveness and precision.
+                        </p>
+                        
+                        <!-- Feature List -->
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                <svg class="w-5 h-5 text-primary-600 dark:text-primary-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Custom Indicator Development
+                            </li>
+                            <li class="flex items-center text-gray-600<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Next-gen NinjaTrader 8 strategy development, AI-powered consultations, and advanced indicator optimization services by TanaTrading Labs">
+    <meta name="theme-color" content="#2563EB">
+    
+    <title>TanaTrading Labs | Advanced NinjaTrader Solutions</title>
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/css/styles.css" as="style">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            950: '#082f49'
+                        }
+                    },
+                    animation: {
+                        'gradient-x': 'gradient-x 15s ease infinite',
+                        'gradient-y': 'gradient-y 15s ease infinite',
+                        'gradient-xy': 'gradient-xy 15s ease infinite',
+                        float: 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        'gradient-y': {
+                            '0%, 100%': {
+                                'background-size': '400% 400%',
+                                'background-position': 'center top'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'center center'
+                            }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            },
+            plugins: []
+        }
+    </script>
+
+    <style>
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            }
+            .text-gradient {
+                background: linear-gradient(to right, #2563eb, #3b82f6);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .bg-glass {
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900 min-h-screen">
+    <!-- Top Banner -->
+    <div class="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1 dark:bg-gray-900">
+        <div class="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl">
+            <div class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-primary-500 to-primary-700 opacity-30" 
+                 style="clip-path: polygon(74.8% 41.9%, 97.2% 73.2%, 100% 34.9%, 92.5% 0.4%, 87.5% 0%, 75% 28.6%, 58.5% 54.6%, 50.1% 56.8%, 46.9% 44%, 48.3% 17.4%, 24.7% 53.9%, 0% 27.9%, 11.9% 74.2%, 24.9% 54.1%, 68.6% 100%, 74.8% 41.9%)">
+            </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <p class="text-sm leading-6 text-gray-900 dark:text-gray-100">
+                <strong class="font-semibold">Authorized NinjaTrader® Vendor</strong>
+                <svg viewBox="0 0 2 2" class="mx-2 inline h-0.5 w-0.5 fill-current"><circle cx="1" cy="1" r="1" /></svg>
+                Professional Trading Solutions
+            </p>
+            <a href="#contact" 
+               class="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-all duration-300 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100">
+                Get Started <span aria-hidden="true">&rarr;</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="fixed w-full top-0 z-50 transition-all duration-500">
+        <nav class="mx-auto bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200/80 dark:border-gray-700/80">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex h-16 items-center justify-between">
+                    <!-- Logo Area -->
+                    <div class="flex-shrink-0">
+                        <a href="/" class="flex items-center">
+                            <img class="h-8 w-auto" src="/logo.svg" alt="TanaTrading Labs">
+                            <span class="ml-2 text-xl font-bold text-gray-900 dark:text-white">TanaTrading Labs</span>
+                        </a>
+                    </div>
+
+                    <!-- Desktop Navigation -->
+                    <div class="hidden md:flex md:items-center md:space-x-8">
+                        <a href="#services" 
+                           class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 transition-colors duration-300">
+                            Services
+                        </a>
+                        <a href="#features" 
+                           class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 transition-colors duration-300">
+                            Features
+                        </a>
+                        <a href="#pricing" 
+                           class="text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 transition-colors duration-300">
+                            Pricing
+                        </a>
+                        <a href="#contact" 
+                           class="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-full text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300 shadow-md hover:shadow-lg">
+                            Get Started
+                        </a>
+
+                        <!-- Dark Mode Toggle -->
+                        <button id="theme-toggle" 
+                                class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-lg transition-colors duration-300">
+                            <!-- Sun icon -->
+                            <svg class="hidden dark:block w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
+                            </svg>
+                            <!-- Moon icon -->
+                            <svg class="block dark:hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Mobile menu button -->
+                    <div class="flex md:hidden">
+                        <button type="button" 
+                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 transition-all duration-300"
+                                aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="relative pt-16">
+        <!-- Hero Background Elements -->
+        <div class="absolute inset-0 grid grid-cols-2 -z-10 dark:opacity-20">
+            <div class="bg-gradient-to-br from-primary-50 to-primary-100 blur-3xl dark:from-primary-900 dark:to-primary-800"></div>
+            <div class="bg-gradient-to-r from-primary-50 to-white blur-3xl dark:from-primary-900 dark:to-gray-900"></div>
+        </div>
+
+        <div class="relative isolate px-6 pt-14 lg:px-8">
+            <div class="mx-auto max-w-7xl py-32 sm:py-48 lg:py-56">
+                <div class="text-center">
+                    <!-- Hero Badge -->
+                    <div class="mb-8 flex justify-center">
+                        <div class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 dark:text-gray-300 dark:ring-gray-700 dark:hover:ring-gray-600">
+                            Announcing our next-gen trading solutions.
+                            <a href="#services" class="font-semibold text-primary-600 dark:text-primary-400">
+                                <span class="absolute inset-0" aria-hidden="true"></span>
+                                Read more <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Hero Title -->
+                    <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-white text-shadow">
+                        Next-Generation
+                        <span class="text-primary-600 dark:text-primary-400">Trading Solutions</span>
+                    </h1>
+
+                    <!-- Hero Description -->
+                    <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                        Elevate your trading with AI-powered strategy development, expert consultations, 
+                        and advanced indicator optimization services.
+                    </p>
+
+                    <!-- Hero Actions -->
+                    <div class="mt-10 flex items-center justify-center gap-x-6">
+                        <a href="#services" 
+                           class="rounded-full bg-primary-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-all duration-300 group flex items-center">
+                            Explore Services
+                            <span class="ml-2 inline-block transition-transform group-hover:translate-x-1">&rarr;</span>
+                        </a>
+                        <a href="#contact" 
+                           class="rounded-full border border-gray-300 dark:border-gray-700 px-6 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300">
+                            Schedule Consultation
+                        </a>
+                    </div>
+
+                    <!-- Stats Section -->
+                    <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                        <!-- Stat 1 -->
+                        <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50 dark:border-gray-700/50 hover:transform hover:scale-105 transition-all duration-300">
+                            <div class="text-primary-600 dark:text-primary-400 mb-2">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">500+</h3>
+                            <p class="text-gray-600 dark:text-gray-300">Active Traders</p>
+                        </div>
+
+                        <!-- Stat 2 -->
+                        <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50 dark:border-gray-700/50 hover:transform hover:scale-105 transition-all duration-300">
+                            <div class="text-primary-600 dark:text-primary-400 mb-2">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">99.9%</h3>
+                            <p class="text-gray-600 dark:text-gray-300">Uptime Guaranteed</p>
+                        </div>
+
+                        <!-- Stat 3 -->
+                        <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50 dark:border-gray-700/50 hover:transform hover:scale-105 transition-all duration-300">
+                            <div class="text-primary-600 dark:text-primary-400 mb-2">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">24/7</h3>
+                            <p class="text-gray-600 dark:text-gray-300">Support Available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-gray-50 dark:bg-gray-900/50 relative overflow-hidden">
+        <!-- Background Decorations -->
+        <div class="absolute inset-0 -z-10">
+            <div class="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white dark:bg-gray-800/10 shadow-xl shadow-primary-600/10 ring-1 ring-primary-50 dark:ring-primary-900/10"></div>
+        </div>
+
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="mx-auto max-w-2xl text-center mb-16">
+                <h2 class="text-base font-semibold leading-7 text-primary-600 dark:text-primary-400">Advanced Features</h2>
+                <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+                    Everything you need for professional trading
+                </p>
+                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+                    Leverage cutting-edge features designed for modern traders, powered by advanced AI and machine learning algorithms.
+                </p>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+                <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+                    <!-- Feature 1: AI Analysis -->
+                    <div class="group hover:transform hover:scale-105 transition-all duration-300">
+                        <div class="bg-white/50 dark:bg-gray-800/50 rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50 h-full">
+                            <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">
+                                <div class="rounded-lg bg-primary-600/10 p-2 ring-1 ring-primary-600/30 group-hover:bg-primary-600/20 transition-colors duration-300">
+                                    <svg class="h-5 w-5 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/>
+                                    </svg>
+                                </div>
+                                AI-Powered Analysis
+                            </dt>
+                            <dd class="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+                                Advanced machine learning algorithms for predictive analysis and pattern recognition in your trading strategies.
+                            </dd>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2: Real-time Optimization -->
+                    <div class="group hover:transform hover:scale-105 transition-all duration-300">
+                        <div class="bg-white/50 dark:bg-gray-800/50 rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50 h-full">
+                            <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">
+                                <div class="rounded-lg bg-primary-600/10 p-2 ring-1 ring-primary-600/30 group-hover:bg-primary-600/20 transition-colors duration-300">
+                                    <svg class="h-5 w-5 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/>
+                                    </svg>
+                                </div>
+                                Real-time Optimization
+                            </dt>
+                            <dd class="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+                                Dynamic strategy adjustment based on market conditions with millisecond precision execution.
+                            </dd>
+                        </div>
+                    </div>
+
+                    <!-- Feature 3: Advanced Analytics -->
+                    <div class="group hover:transform hover:scale-105 transition-all duration-300">
+                        <div class="bg-white/50 dark:bg-gray-800/50 rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50 h-full">
+                            <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">
+                                <div class="rounded-lg bg-primary-600/10 p-2 ring-1 ring-primary-600/30 group-hover:bg-primary-600/20 transition-colors duration-300">
+                                    <svg class="h-5 w-5 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"/>
+                                    </svg>
+                                </div>
+                                Advanced Analytics
+                            </dt>
+                            <dd class="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+                                Comprehensive market analysis with real-time data visualization and performance tracking.
+                            </dd>
+                        </div>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </section>
+
+    <!-- NinjaTrader Platform Section -->
+    <section class="py-24 bg-white dark:bg-gray-900 relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20"></div>
+            <div class="absolute inset-x-0 top-0 h-96 bg-gradient-to-b from-white dark:from-gray-900"></div>
+            <div class="absolute inset-x-0 bottom-0 h-96 bg-gradient-to-t from-white dark:from-gray-900"></div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-12 lg:gap-x-8 lg:gap-y-20">
+                <!-- Content Side -->
+                <div class="lg:col-span-5 lg:pt-16">
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 mb-8">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                            <span class="text-sm font-medium">Authorized NinjaTrader® Vendor</span>
+                        </div>
+
+                        <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+                            Professional Trading Platform
+                        </h2>
+                        <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+                            Experience the power of NinjaTrader® 8 - our recommended trading platform trusted by professional traders worldwide.
+                        </p>
+
+                        <dl class="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 dark:text-gray-300">
+                            <div class="relative pl-9">
+                                <dt class="inline font-semibold text-gray-900 dark:text-white">
+                                    <svg class="absolute left-1 top-1 h-5 w-5 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+                                    </svg>
+                                    Advanced Charting Tools
+                                </dt>
+                                <dd class="inline">Multi-timeframe analysis with customizable indicators and drawing tools.</dd>
+                            </div>
+
+                            <div class="relative pl-9">
+                                <dt class="inline font-semibold text-gray-900 dark:text-white">
+                                    <svg class="absolute left-1 top-1 h-5 w-5 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+                                    </svg>
+                                    Strategy Development
+                                </dt>
+                                <dd class="inline">Build and test custom trading strategies with NinjaScript®.</dd>
+                            </div>
+
+                            <div class="relative pl-9">
+                                <dt class="inline font-semibold text-gray-900 dark:text-white">
+                                    <svg class="absolute left-1 top-1 h-5 w-5 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+                                    </svg>
+                                    Trade Simulation
+                                </dt>
+                                <dd class="inline">Practice and test strategies with real-time market data.</dd>
+                            </div>
+                        </dl>
+
+                        <div class="mt-10 flex flex-col sm:flex-row gap-4">
+                            <a href="https://ninjatrader.com/GetStarted" target="_blank" rel="noopener noreferrer" 
+                               class="inline-flex items-center justify-center rounded-lg bg-primary-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-all duration-300">
+                                Download NinjaTrader
+                                <svg class="ml-2 -mr-0.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+                                </svg>
+                            </a>
+                            <a href="https://ninjatrader.com/FreeLiveData" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center justify-center rounded-lg bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 transition-all duration-300">
+                                Try Free Demo
+                                <svg class="ml-2 -mr-0.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Platform Preview -->
+                <div class="relative mt-10 sm:mt-20 lg:col-span-7 lg:mt-0 xl:col-span-7">
+                    <div class="relative -mx-4 h-[450px] sm:mx-0">
+                        <!-- Main Image -->
+                        <div class="relative h-full overflow-hidden rounded-2xl bg-white/5 shadow-2xl ring-1 ring-white/10">
+                            <img src="/path-to-your-platform-image.jpg" 
+                                 alt="NinjaTrader Platform Interface" 
+                                 class="absolute inset-0 h-full w-full object-cover"/>
+                            
+                            <!-- Floating Features -->
+                            <div class="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
+                                <div class="flex items-center space-x-2">
+                                    <svg class="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zm6.75-4.5c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+                                    </svg>
+                                    <span class="text-sm font-medium">Advanced Charts</span>
+                                </div>
+                            </div>
+                            
+                            <div class="absolute bottom-4 left-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
+                                <div class="flex items-center space-x-2">
+                                    <svg class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/>
+                                    </svg>
+                                    <span class="text-sm font-medium">Real-time Data</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kinetick Data Feed Section -->
+    <section class="relative py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)] dark:bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)]"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-24 items-center">
+                <!-- Content Side -->
+                <div class="max-w-2xl">
+                    <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 mb-8">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                        <span class="text-sm font-medium">Recommended Data Feed</span>
+                    </div>
+
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+                        Premium Market Data with Kinetick®
+                    </h2>
+                    <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+                        Access institutional-grade market data with Kinetick®. Get reliable, fast, and cost-effective data feeds designed for active traders.
+                    </p>
+
+                    <div class="mt-10 space-y-6">
+                        <div class="flex gap-x-4">
+                            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-600 dark:bg-primary-500">
+                                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zm6.75-4.5c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Real-time Market Data</h3>
+                                <p class="mt-2 text-gray-600 dark:text-gray-300">Get unfiltered real-time quotes for stocks, futures, and forex markets.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-x-4">
+                            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-600 dark:bg-primary-500">
+                                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Low Latency</h3>
+                                <p class="mt-2 text-gray-600 dark:text-gray-300">Experience minimal delay with our optimized data delivery infrastructure.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 flex flex-col sm:flex-row gap-4">
+                        <a href="https://kinetick.com" target="_blank" rel="noopener noreferrer" 
+                           class="inline-flex items-center justify-center rounded-lg bg-primary-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-all duration-300">
+                            Get Started
+                            <svg class="ml-2 -mr-0.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                            </svg>
+                        </a>
+                        <a href="https://kinetick.com/FreeLiveData" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center justify-center rounded-lg bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 transition-all duration-300">
+                            Try Free EOD Data
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Image Side -->
+                <div class="mt-10 lg:mt-0">
+                    <div class="relative aspect-[4/3] overflow-hidden rounded-2xl bg-gray-900/5 dark:bg-gray-100/5">
+                        <img src="/path-to-kinetick-image.jpg" alt="Kinetick Data Feed Interface" class="absolute inset-0 h-full w-full object-cover"/>
+                        <!-- Floating Stats -->
+                        <div class="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+                            <div class="flex flex-col items-start space-y-2">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs font-medium text-gray-500">Data Latency</span>
+                                    <span class="text-sm font-bold text-green-500">&lt; 10ms</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs font-medium text-gray-500">Uptime</span>
+                                    <span class="text-sm font-bold text-green-500">99.99%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-24 bg-white dark:bg-gray-900 sm:py-32">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-xl text-center">
+                <h2 class="text-lg font-semibold leading-8 tracking-tight text-primary-600">Testimonials</h2>
+                <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+                    Trusted by Traders Worldwide
+                </p>
+            </div>
+            <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 grid-rows-1 gap-8 text-sm leading-6 text-gray-900 sm:mt-20 sm:grid-cols-2 xl:mx-0 xl:max-w-none xl:grid-cols-3">
+                <figure class="rounded-2xl bg-white dark:bg-gray-800 shadow-lg ring-1 ring-gray-900/5 dark:ring-gray-700/5 p-6">
+                    <blockquote class="text-gray-900 dark:text-white">
+                        <p>"The custom strategies developed by TanaTrading Labs have significantly improved my trading performance. Their expertise in NinjaTrader is unmatched."</p>
+                    </blockquote>
+                    <figcaption class="mt-6 flex items-center gap-x-4">
+                        <div class="h-10 w-10 rounded-full bg-gray-50 dark:bg-gray-700"></div>
+                        <div>
+                            <div class="font-semibold text-gray-900 dark:text-white">Michael R.</div>
+                            <div class="text-gray-600 dark:text-gray-400">Futures Trader</div>
+                        </div>
+                    </figcaption>
+                </figure>
+                <!-- Add 2 more testimonials with similar structure -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="py-24 bg-gray-50 dark:bg-gray-900/50">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-4xl text-center">
+                <h2 class="text-base font-semibold leading-7 text-primary-600">Pricing</h2>
+                <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+                    Choose your trading plan
+                </p>
+            </div>
+
+            <div class="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                <!-- Basic Plan -->
+                <div class="rounded-3xl p-8 ring-1 ring-gray-200 dark:ring-gray-700 xl:p-10 bg-white dark:bg-gray-800">
+                    <div class="flex items-center justify-between gap-x-4">
+                        <h3 class="text-lg font-semibold leading-8 text-gray-900 dark:text-white">Basic</h3>
+                        <p class="rounded-full bg-primary-50 dark:bg-primary-900/50 px-2.5 py-1 text-xs font-semibold leading-5 text-primary-600 dark:text-primary-400">
+                            Most popular
+                        </p>
+                    </div>
+                    <p class="mt-4 text-sm leading-6 text-gray-600 dark:text-gray-400">Perfect for individual traders starting their journey.</p>
+                    <p class="mt-6 flex items-baseline gap-x-1">
+                        <span class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">$99</span>
+                        <span class="text-sm font-semibold leading-6 text-gray-600 dark:text-gray-400">/month</span>
+                    </p>
+                    <a href="#" class="mt-6 block rounded-md bg-primary-600 px-3 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">
+                        Get started
+                    </a>
+                    <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-gray-600 dark:text-gray-400">
+                        <li class="flex gap-x-3">
+                            <svg class="h-6 w-5 flex-none text-primary-600" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/>
+                            </svg>
+                            Basic Strategy Development
+                        </li>
+                        <!-- Add more features -->
+                    </ul>
+                </div>
+
+                <!-- Add Pro and Enterprise plans with similar structure -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="relative isolate bg-white dark:bg-gray-900">
+        <div class="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
+            <div class="relative px-6 pb-20 pt-24 sm:pt-32 lg:static lg:px-8 lg:py-48">
+                <div class="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
+                    <div class="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden bg-gray-100 dark:bg-gray-900 ring-1 ring-gray-900/10 dark:ring-white/5 lg:w-1/2">
+                        <div class="absolute inset-0 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.primary.100),transparent)] dark:bg-[radial-gradient(45rem_50rem_at_top,theme(colors.primary.900),transparent)]"></div>
+                    </div>
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Get in touch</h2>
+                    <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+                        Ready to elevate your trading? Contact us for a free consultation about your trading needs.
+                    </p>
+                    <dl class="mt-10 space-y-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+                        <div class="flex gap-x-4">
+                            <dt class="flex-none">
+                                <span class="sr-only">Email</span>
+                                <svg class="h-7 w-6 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+                                </svg>
+                            </dt>
+                            <dd><a class="hover:text-primary-600 dark:hover:text-primary-400" href="mailto:contact@tanatradinglabs.com">contact@tanatradinglabs.com</a></dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            <form class="px-6 pb-24 pt-20 sm:pb-32 lg:px-8 lg:py-48 space-y-8">
+                <!-- Name Input -->
+                <div class="relative">
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        class="peer block w-full border-0 bg-white/5 px-4 py-3.5 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-primary-600 dark:focus:ring-primary-500 rounded-md placeholder:text-gray-400 sm:text-sm"
+                        placeholder="Your name"
+                    />
+                    <label
+                        for="name"
+                        class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-900 px-1 text-xs font-medium text-gray-900 dark:text-white">
+                        Name
+                    </label>
+                </div>
+
+                <!-- Email Input -->
+                <div class="relative">
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        class="peer block w-full border-0 bg-white/5 px-4 py-3.5 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-primary-600 dark:focus:ring-primary-500 rounded-md placeholder:text-gray-400 sm:text-sm"
+                        placeholder="Your email"
+                    />
+                    <label
+                        for="email"
+                        class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-900 px-1 text-xs font-medium text-gray-900 dark:text-white">
+                        Email
+                    </label>
+                </div>
+
+                <!-- Service Selection -->
+                <div class="relative">
+                    <select
+                        id="service"
+                        name="service"
+                        required
+                        class="peer block w-full border-0 bg-white/5 px-4 py-3.5 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-primary-600 dark:focus:ring-primary-500 rounded-md sm:text-sm"
+                    >
+                        <option value="">Select a service</option>
+                        <option value="strategy">Custom Strategy Development</option>
+                        <option value="consultation">Trading Consultation</option>
+                        <option value="optimization">Indicator Optimization</option>
+                    </select>
+                    <label
+                        for="service"
+                        class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-900 px-1 text-xs font-medium text-gray-900 dark:text-white">
+                        Service
+                    </label>
+                </div>
+
+                <!-- Message Input -->
+                <div class="relative">
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="4"
+                        required
+                        class="peer block w-full border-0 bg-white/5 px-4 py-3.5 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-primary-600 dark:focus:ring-primary-500 rounded-md placeholder:text-gray-400 sm:text-sm"
+                        placeholder="Your message"
+                    ></textarea>
+                    <label
+                        for="message"
+                        class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-900 px-1 text-xs font-medium text-gray-900 dark:text-white">
+                        Message
+                    </label>
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                    <button
+                        type="submit"
+                        class="rounded-md bg-primary-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-all duration-300">
+                        Send message
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Risk Disclosure Section -->
+    <section class="bg-gray-50 dark:bg-gray-900/50 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Important Risk Disclosure</h3>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Futures and forex trading contains substantial risk and is not for every investor. An investor could potentially lose all or more than the initial investment. Risk capital is money that can be lost without jeopardizing ones' financial security or lifestyle. Only risk capital should be used for trading and only those with sufficient risk capital should consider trading. Past performance is not necessarily indicative of future results.
+                </p>
+
+                <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Trademark Notice</h4>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. No NinjaTrader company has any affiliation with the owner, developer, or provider of the products or services described herein, or any interest, ownership or otherwise, in any such product or service, or endorses, recommends or approves any such product or service.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-gray-950" aria-labelledby="footer-heading">
+        <h2 id="footer-heading" class="sr-only">Footer</h2>
+        <div class="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
+            <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+                <!-- Company Info -->
+                <div class="space-y-8">
+                    <img class="h-7" src="/logo-light.svg" alt="TanaTrading Labs Logo">
+                    <p class="text-sm leading-6 text-gray-300">
+                        Professional NinjaTrader solutions provider and authorized vendor.
+                    </p>
+                    <div class="flex space-x-6">
+                        <!-- Social Links -->
+                        <a href="#" class="text-gray-500 hover:text-gray-400">
+                            <span class="sr-only">Twitter</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Links Columns -->
+                <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold leading-6 text-white">Services</h3>
+                            <ul role="list" class="mt-6 space-y-4">
+                                <li>
+                                    <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Strategy Development</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Trading Consultations</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Indicator Optimization</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-10 md:mt-0">
+                            <h3 class="text-sm font-semibold leading-6 text-white">Support</h3>
+                            <ul role="list" class="mt-6 space-y-4">
+                                <li>
+                                    <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Contact</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Privacy Policy</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Terms of Service</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24">
+                <p class="text-xs leading-5 text-gray-400">&copy; 2024 TanaTrading Labs. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100,
+            disable: window.innerWidth < 768
+        });
+
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('theme-toggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+                localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+            });
+        }
+    </script>
+</body>
+</html>
